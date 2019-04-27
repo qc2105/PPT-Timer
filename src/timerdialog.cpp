@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "settingdialog.h"
 #include <QMessageBox>
+#include "warningbox.h"
 
 TimerDialog::TimerDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,10 +13,9 @@ TimerDialog::TimerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
-    setWindowFlags(windowFlags()|Qt::WindowStaysOnTopHint);
 
-    warning = new QMessageBox(this);
-    warning->setModal(false);
+    warning = new WarningBox();
+    setWindowFlag(Qt::Window);
     warning->setWindowTitle("Warning");
 
     this->isMoving = false;
@@ -24,8 +24,7 @@ TimerDialog::TimerDialog(QWidget *parent) :
     this->timer->setInterval(1000);
 
     this->time = this->settingDialog->getTotalTime();
-    this->ui->time_display->setTextFormat(Qt::RichText);
-    this->ui->time_display->setText("<h1>" + this->time.toString("mm:ss") + "</h1>");
+    this->ui->time_display->setText(this->time.toString("mm:ss"));
 
     connect(ui->start_button, &QPushButton::clicked, [this](){this->timer->start();});
     connect(ui->pause_button, &QPushButton::clicked, [this](){this->timer->stop();});
@@ -38,7 +37,10 @@ TimerDialog::TimerDialog(QWidget *parent) :
         this->time = this->time.addSecs(-1);
         if(this->time == this->settingDialog->getWarningTime())
         {
-            warning->setText(tr("剩余时间:") + this->time.toString("mm:ss"));
+            warning->warning_display.setText(tr("剩余时间:") + this->time.toString("mm:ss"));
+            warning->resize(this->width()/2, this->height()/2);
+            qDebug() << "warning size: " << warning->size() << endl;
+
             warning->show();
         }
         else if(this->time == this->settingDialog->getWarningTime().addSecs(-3))
@@ -48,11 +50,14 @@ TimerDialog::TimerDialog(QWidget *parent) :
         else if(this->time == QTime(0, 0))
         {
             this->timer->stop();
-            warning->setText(tr("时间结束"));
+            warning->warning_display.setText(tr("时间结束"));
+            warning->resize(this->width()/2, this->height()/2);
+            qDebug() << "warning size: " << warning->size() << endl;
+
             warning->show();
         }
-        this->ui->time_display->setText("<h1>" + this->time.toString("mm:ss") + "</h1>");
-        warning->setText(tr("剩余时间:") + this->time.toString("mm:ss"));
+        this->ui->time_display->setText(this->time.toString("mm:ss"));
+        warning->warning_display.setText(tr("剩余时间:") + this->time.toString("mm:ss"));
     });
 }
 
@@ -76,16 +81,16 @@ void TimerDialog::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-
 void TimerDialog::mouseReleaseEvent(QMouseEvent* event)
 {
     this->isMoving = false;
 }
 
-
 void TimerDialog::refresh()
 {
     this->time = this->settingDialog->getTotalTime();
-    this->ui->time_display->setText("<h1>" + this->time.toString("mm:ss") + "</h1>");
+    this->ui->time_display->setText(this->time.toString("mm:ss"));
     this->timer->stop();
 }
+
+
