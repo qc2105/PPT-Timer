@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+  <DisplayName>PPT-Timer</DisplayName>
+  <Description>PPT-Timer</Description>
+  <Version>1.0</Version>
+  <ReleaseDate>2019-04-28</ReleaseDate>
+  <Name>PPT-Timer</Name>
+  <Licenses>
+  <License name="GPL" file="license.txt" />
+  </Licenses>
+  <ForcedInstallation>true</ForcedInstallation>
+  <Script>installshortcut.qs</Script>
+</Package>

@@ -12,6 +12,7 @@ TimerDialog::TimerDialog(QWidget *parent) :
     time(0,0,0,0)
 {
     ui->setupUi(this);
+    setWindowTitle("Su's Timer");
     setWindowFlags(Qt::Window);
 
     warning = new WarningBox();
@@ -37,7 +38,7 @@ TimerDialog::TimerDialog(QWidget *parent) :
         this->time = this->time.addSecs(-1);
         if(this->time == this->settingDialog->getWarningTime())
         {
-            warning->warning_display.setText(tr("剩余时间:") + this->time.toString("mm:ss"));
+            warning->warning_display.setText(tr("Time Left:") + this->time.toString("mm:ss"));
             warning->resize(this->width()/2, this->height()/2);
             qDebug() << "warning size: " << warning->size() << endl;
 
@@ -50,14 +51,14 @@ TimerDialog::TimerDialog(QWidget *parent) :
         else if(this->time == QTime(0, 0))
         {
             this->timer->stop();
-            warning->warning_display.setText(tr("时间结束"));
+            warning->warning_display.setText(tr("End"));
             warning->resize(this->width()/2, this->height()/2);
             qDebug() << "warning size: " << warning->size() << endl;
 
             warning->show();
         }
         this->ui->time_display->setText(this->time.toString("mm:ss"));
-        warning->warning_display.setText(tr("剩余时间:") + this->time.toString("mm:ss"));
+        warning->warning_display.setText(tr("Time Left:") + this->time.toString("mm:ss"));
     });
 }
 

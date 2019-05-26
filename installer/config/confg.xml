@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+  <Name>PPT-Timer</Name>
+  <Version>1.0</Version>
+  <Title>PPT-Timer</Title>
+  <Publisher>Chuan Qin</Publisher>
+  <StartMenuDir>My Application</StartMenuDir>
+  <TargetDir>@rootDir@PPT-Timer</TargetDir>
+</Installer>

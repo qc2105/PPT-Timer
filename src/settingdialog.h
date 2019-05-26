@@ -20,6 +20,9 @@ public:
 signals:
     void set(void);
 
+private slots:
+    void on_pushButtonCancel_clicked();
+
 private:
     Ui::SettingDialog *ui;
 };

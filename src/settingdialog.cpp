@@ -31,3 +31,8 @@ QTime SettingDialog::getWarningTime()
 {
     return ui->warning_time->time();
 }
+
+void SettingDialog::on_pushButtonCancel_clicked()
+{
+    this->close();
+}
